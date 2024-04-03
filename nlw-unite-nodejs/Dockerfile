@@ -4,7 +4,7 @@ FROM base AS dependencies
 
 WORKDIR /usr/src/app
 
-COPY package.json package-lock.json ./
+COPY ./nlw-unite-nodejs/package.json ./nlw-unite-nodejs/package-lock.json ./
 
 RUN npm install
 
@@ -12,7 +12,7 @@ FROM base AS build
 
 WORKDIR /usr/src/app
 
-COPY . .
+COPY ./nlw-unite-nodejs .
 COPY --from=dependencies /usr/src/app/node_modules ./node_modules
 
 RUN npm run build
