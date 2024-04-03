@@ -29,9 +29,6 @@ COPY --from=build /usr/src/app/node_modules ./node_modules
 COPY --from=build /usr/src/app/package.json ./package.json
 COPY --from=build /usr/src/app/prisma ./prisma
 
-ENV DATABASE_URL="file:./db.sqlite"
-ENV API_BASE_URL="http://localhost:3333"
-
 RUN prisma generate
 
 EXPOSE 3333

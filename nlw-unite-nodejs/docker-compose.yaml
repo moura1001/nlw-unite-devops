@@ -1,0 +1,38 @@
+version: '3.7'
+
+services:
+  postgres-db:
+    image: postgres:13-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      ALLOW_IP_RANGE: 0.0.0.0/0
+    ports:
+      - "5432:5432"
+    networks:
+      - passin
+    volumes:
+      - "db:/var/lib/postgresql/data"
+
+  api-pass-in:
+    build:
+      context: .
+    container_name: api-pass-in
+    ports:
+      - 3001:3333
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      API_BASE_URL: ${API_BASE_URL}
+    depends_on:
+      - postgres-db
+    networks:
+      - passin
+
+networks:
+  passin:
+    driver: bridge
+
+volumes:
+  db:
