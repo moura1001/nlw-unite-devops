@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+    paths:
+      - 'nlw-unite-nodejs/**'
 
 jobs:
   build-and-push:
