@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: passin-deployment
+  label:
+    app: passin
+
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: passin
+  template:
+    metadata:
+      labels:
+        app: passin
+    spec:
+      containers:
+        - name: passin
+          image: moura1001/devops:nlw-unite-nodejs-4f92bc2
+          env:
+          - name: DATABASE_URL
+            valueFrom:
+              secretKeyRef:
+                name: nlw-unite-devops-db-connection
+                key: databaseUrl
+          - name: API_BASE_URL
+            valueFrom:
+              configMapKeyRef:
+                name: nlw-unite-devops-env
+                key: apiBaseUrl
+          ports:
+            - containerPort: 3333
+          resources:
+            requests:
+              cpu: 200m
+              memory: 512Mi
+            limits:
+              cpu: 400m
+              memory: 512Mi
