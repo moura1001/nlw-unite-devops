@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+
+metadata:
+  name: my-repo
+  namespace: argocd
+  labels:
+    argocd.argoproj.in/secret-type: repository
+
+stringData:
+  type: git
+  url: https://github.com/moura1001/nlw-unite-devops.git

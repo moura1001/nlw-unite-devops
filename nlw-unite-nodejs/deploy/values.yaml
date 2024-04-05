@@ -74,14 +74,27 @@ resources:
     cpu: 400m
     memory: 128Mi
 
-#livenessProbe:
-#  httpGet:
-#    path: /
-#    port: http
-#readinessProbe:
-#  httpGet:
-#    path: /
-#    port: http
+livenessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 60
+  failureThreshold: 5
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 60
+  failureThreshold: 5
+  periodSeconds: 10
+startupProbe:
+  httpGet:
+    path: /health
+    port: http
+  initialDelaySeconds: 40
+  failureThreshold: 5
+  periodSeconds: 10
 
 autoscaling:
   enabled: true
