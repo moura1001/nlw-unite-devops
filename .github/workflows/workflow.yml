@@ -38,9 +38,11 @@ jobs:
         docker push moura1001/devops:nlw-unite-nodejs-latest
     
     - name: Update deploy image tag to trigger CD step with Argo CD
-      uses: mikefarah/yq@master
+      uses: fjogeleit/yaml-update-action@main
       with:
         branch: master
-        cmd: yq -i '.image.tag = "nlw-unite-nodejs-${{ steps.generate_sha.outputs.sha }}"' 'nlw-unite-nodejs/deploy/values.yaml'
+        valueFile: 'nlw-unite-nodejs/deploy/values.yaml'
+        propertyPath: 'image.tag'
+        value: "nlw-unite-nodejs-${{ steps.generate_sha.outputs.sha }}"
         commitChange: true
         message: "new: updated image tag into helm values"
